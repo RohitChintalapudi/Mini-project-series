@@ -114,11 +114,9 @@
         let ties = 0;
         
         function play(playerChoice) {
-            // Computer's random choice
             const choices = ['Rock', 'Paper', 'Scissors'];
             const computerChoice = choices[Math.floor(Math.random() * 3)];
             
-            // Determine result
             let result;
             if (playerChoice === computerChoice) {
                 result = "It's a tie!";
@@ -135,7 +133,7 @@
                 losses++;
             }
             
-            // Update display
+            
             document.getElementById('result').innerHTML = `
                 You chose <span class="highlight">${playerChoice}</span><br>
                 Computer chose <span class="highlight">${computerChoice}</span><br><br>
