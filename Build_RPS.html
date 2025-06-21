@@ -109,41 +109,71 @@
     </div>
 
     <script>
-        let wins = 0;
-        let losses = 0;
-        let ties = 0;
-        
-        function play(playerChoice) {
-            const choices = ['Rock', 'Paper', 'Scissors'];
-            const computerChoice = choices[Math.floor(Math.random() * 3)];
-            
-            let result;
-            if (playerChoice === computerChoice) {
-                result = "It's a tie!";
-                ties++;
-            } else if (
-                (playerChoice === 'Rock' && computerChoice === 'Scissors') ||
-                (playerChoice === 'Paper' && computerChoice === 'Rock') ||
-                (playerChoice === 'Scissors' && computerChoice === 'Paper')
-            ) {
-                result = "You win!";
-                wins++;
-            } else {
-                result = "You lose!";
-                losses++;
-            }
-            
-            
-            document.getElementById('result').innerHTML = `
-                You chose <span class="highlight">${playerChoice}</span><br>
-                Computer chose <span class="highlight">${computerChoice}</span><br><br>
-                <span style="font-size: 18px;">${result}</span>
-            `;
-            
-            document.getElementById('wins').textContent = wins;
-            document.getElementById('losses').textContent = losses;
-            document.getElementById('ties').textContent = ties;
+       <script>
+    let wins = 0;
+    let losses = 0;
+    let ties = 0;
+
+    function play(playerChoice) {
+        let randomNum = Math.floor(Math.random() * 3);
+        let computerChoice;
+
+        if (randomNum === 0) {
+            computerChoice = "Rock";
+        } 
+        else if (randomNum === 1) {
+            computerChoice = "Paper";
+        } 
+        else {
+            computerChoice = "Scissors";
         }
+
+        let result;
+        if (playerChoice === computerChoice) {
+            result = "It's a tie!";
+            ties++;
+        } 
+        else {
+            if (playerChoice === "Rock") {
+                if (computerChoice === "Scissors") {
+                    result = "You win! Rock beats Scissors.";
+                    wins++;
+                } else if (computerChoice === "Paper") {
+                    result = "You lose! Paper beats Rock.";
+                    losses++;
+                }
+            } 
+            else if (playerChoice === "Paper") {
+                if (computerChoice === "Rock") {
+                    result = "You win! Paper beats Rock.";
+                    wins++;
+                } else if (computerChoice === "Scissors") {
+                    result = "You lose! Scissors beat Paper.";
+                    losses++;
+                }
+            } 
+            else if (playerChoice === "Scissors") {
+                if (computerChoice === "Paper") {
+                    result = "You win! Scissors beat Paper.";
+                    wins++;
+                }
+                else if (computerChoice === "Rock") {
+                    result = "You lose! Rock beats Scissors.";
+                    losses++;
+                }
+            }
+        }
+        document.getElementById('result').innerHTML = `
+            You chose <span class="highlight">${playerChoice}</span><br>
+            Computer chose <span class="highlight">${computerChoice}</span><br><br>
+            <span style="font-size: 18px;">${result}</span>`;
+        
+        document.getElementById('wins').textContent = wins;
+        document.getElementById('losses').textContent = losses;
+        document.getElementById('ties').textContent = ties;
+    }
+</script>
+
     </script>
 </body>
 </html>
