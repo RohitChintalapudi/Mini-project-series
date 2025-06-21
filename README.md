@@ -15,9 +15,8 @@ Classic game with computer opponent and score tracking
 - Animated results  
 - Score persistence  
 
-### 3. Task Manager
+### 3. Task Manager (New version was also uploaded)
 Dark-themed productivity app with add/delete functionality  
-**Highlights:**  
-- Local storage integration  
+**Highlights:**   
 - Glow effect UI  
 - Responsive design  
