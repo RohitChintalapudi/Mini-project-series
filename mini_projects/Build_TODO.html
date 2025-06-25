@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        :root {
+            --primary: #6200ee;
+            --primary-dark: #3700b3;
+            --secondary: #03dac6;
+            --background: #121212;
+            --surface: #1e1e1e;
+            --error: #cf6679;
+            --on-background: #e1e1e1;
+            --on-surface: #ffffff;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--on-background);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        
+        .app-container {
+            background-color: var(--surface);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 24px;
+            margin-top: 40px;
+        }
+        
+        .app-title {
+            color: var(--on-surface);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .task-input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background-color: #2d2d2d;
+            color: var(--on-surface);
+            font-size: 16px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        
+        .task-input:focus {
+            border-color: var(--primary);
+        }
+        
+        .add-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 24px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .add-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .tasks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .task-item {
+            background-color: #252525;
+            border-radius: 4px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .task-text {
+            flex: 1;
+            word-break: break-word;
+            padding-right: 12px;
+        }
+        
+        .delete-btn {
+            background-color: transparent;
+            color: var(--error);
+            border: 1px solid var(--error);
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background-color: rgba(207, 102, 121, 0.1);
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 20px 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1 class="app-title">Task Manager</h1>
+        
+        <div class="input-group">
+            <input type="text" 
+                   class="task-input" 
+                   placeholder="Enter a new task..." 
+                   id="taskInput"
+                   onkeypress="handleKeyPress(event)">
+            <button class="add-btn" onclick="addTask()">Add</button>
+        </div>
+        
+        <div class="tasks-container" id="tasksContainer">
+            <div class="empty-state">No tasks yet. Add one above!</div>
+        </div>
+    </div>
+
+    <script>
+        let tasks = [];
+        const taskInput = document.getElementById('taskInput');
+        const tasksContainer = document.getElementById('tasksContainer');
+        
+        function renderTasks() {
+            if (tasks.length === 0) {
+                tasksContainer.innerHTML = '<div class="empty-state">No tasks yet. Add one above!</div>';
+                return;
+            }
+            
+            let html = '';
+            tasks.forEach((task, index) => {
+                html += `
+                    <div class="task-item">
+                        <div class="task-text">${task}</div>
+                        <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
+                    </div>
+                `;
+            });
+            tasksContainer.innerHTML = html;
+        }
+        
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText !== '') {
+                tasks.push(taskText);
+                taskInput.value = '';
+                renderTasks();
+            }
+        }
+        
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        }
+        
+        // Initialize
+        renderTasks();
+    </script>
+</body>
+</html>
